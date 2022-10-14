@@ -2,14 +2,19 @@ package com.example.tiptime
 
 /**
  * -----------------
- * CALCULATE TIP
+ * Tip
  * -----------------
  */
 class Tip(
-    var costOfService: String,
-    var howWasService: Int,
-    var roundUp: Boolean,
+    val costOfService: String,
+    val howWasService: Int,
+    val roundUp: Boolean,
+    val split: Boolean,
+    val numberPeople: String
 ) {
+
+    private val defaultDivider: Int = 1
+
     private val tipPercentage: Int
         get() = when (this.howWasService) {
             R.id.option_twenty_percent -> 20
@@ -18,8 +23,8 @@ class Tip(
         }
 
     private val cost: Double
-        get() = if (costOfService.isNotEmpty()) {
-            costOfService.toDouble()
+        get() = if (this.costOfService.isNotEmpty()) {
+            this.costOfService.toDouble()
         } else {
             0.0
         }
@@ -29,7 +34,14 @@ class Tip(
             kotlin.math.ceil(cost / 100 * tipPercentage)
         } else {
             cost / 100 * tipPercentage
-            //String.format("%.2f", cost / 100 * tipPercentage)
+        }
+    }
+
+    fun calculateTipForPerson(): Double {
+        return if (split && numberPeople.isNotEmpty()) {
+            calculateTip() / numberPeople.toInt()
+        } else {
+            calculateTip()
         }
     }
 }

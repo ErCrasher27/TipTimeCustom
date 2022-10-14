@@ -6,7 +6,12 @@
     <string name="amazing_service">Amazing (20%)</string>
     <string name="good_service">Good (18%)</string>
     <string name="ok_service">Okay (15%)</string>
+    <string name="split_question">Do you want to split?</string>
+    <string name="split_into">split_into</string>
+    <string name="how_many_people">How many people?</string>
     <string name="round_up_tip">Round up tip?</string>
     <string name="calculate">Calculate</string>
-    <string name="tip_amount">Tip Amount: %s</string>
+    <string name="tip_amount_per_person">Tip Amount Per Person: %s</string>
+    <string name="tip_amount_total">Tip Amount Total: %s</string>
+
 </resources>

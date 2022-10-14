@@ -6,9 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -91,6 +89,44 @@
         </RadioGroup>
 
         <ImageView
+            android:id="@+id/icon_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toBottomOf="@id/split_switch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/split_switch"
+            app:srcCompat="@drawable/ic_people" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/split_switch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:minHeight="48dp"
+            android:text="@string/split_question"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/icon_people"
+            app:layout_constraintTop_toBottomOf="@id/tip_options" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/how_many_people"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="@string/how_many_people"
+            app:layout_constraintStart_toStartOf="@id/split_switch"
+            app:layout_constraintTop_toBottomOf="@id/split_switch">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/how_much_people_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageView
             android:id="@+id/icon_round_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,26 +146,40 @@
             android:text="@string/round_up_tip"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/icon_round_up"
-            app:layout_constraintTop_toBottomOf="@id/tip_options" />
+            app:layout_constraintTop_toBottomOf="@id/how_many_people" />
 
         <Button
             android:id="@+id/calculate_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:height="60dp"
             android:text="@string/calculate"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/round_up_switch"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/round_up_switch" />
 
         <TextView
-            android:id="@+id/tip_result"
+            android:id="@+id/tip_result_per_person"
             style="@style/Widget.TipTime.TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:text="@string/tip_amount_per_person"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/calculate_button" />
+
+        <TextView
+            android:id="@+id/tip_result_total"
+            style="@style/Widget.TipTime.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tip_amount_total"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tip_result_per_person" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
