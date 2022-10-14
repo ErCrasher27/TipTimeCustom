@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tiptime.databinding.ActivityMainBinding
 
@@ -31,6 +33,18 @@ class MainActivity : AppCompatActivity() {
             binding.howMuchPeopleEditText.text = null
         }
 
+        //set OnCheckedChangeListener on tipOption
+        binding.tipOptions.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+            val radio: RadioButton = group.findViewById(checkedId)
+            if (radio == binding.optionCustom) {
+                binding.optionCustomTextInput.isEnabled = true
+                binding.optionCustomEditText.text = null
+            } else {
+                binding.optionCustomTextInput.isEnabled = false
+                binding.optionCustomEditText.text = null
+            }
+        })
+
         //set eventClick on calculateButton
         binding.calculateButton.setOnClickListener {
             val tipObj =
@@ -39,7 +53,8 @@ class MainActivity : AppCompatActivity() {
                     howWasService = binding.tipOptions.checkedRadioButtonId,
                     roundUp = binding.roundUpSwitch.isChecked,
                     split = binding.splitSwitch.isChecked,
-                    numberPeople = binding.howMuchPeopleEditText.text.toString()
+                    numberPeople = binding.howMuchPeopleEditText.text.toString(),
+                    customPercentage = binding.optionCustomEditText.text.toString()
                 )
 
             val tip = tipObj.calculateTip()

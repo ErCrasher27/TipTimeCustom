@@ -10,16 +10,25 @@ class Tip(
     val howWasService: Int,
     val roundUp: Boolean,
     val split: Boolean,
-    val numberPeople: String
+    val numberPeople: String,
+    private val customPercentage: String
 ) {
 
-    private val defaultDivider: Int = 1
+    private val defaultValueForNull: Int = 0
 
     private val tipPercentage: Int
         get() = when (this.howWasService) {
             R.id.option_twenty_percent -> 20
             R.id.option_eighteen_percent -> 18
+            R.id.option_custom -> {
+                if (customPercentage.isNotEmpty()) {
+                    customPercentage.toInt()
+                } else {
+                    defaultValueForNull
+                }
+            }
             else -> 15
+
         }
 
     private val cost: Double
