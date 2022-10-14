@@ -17,18 +17,19 @@ class Tip(
             else -> 15
         }
 
-    private val cost: Float
+    private val cost: Double
         get() = if (costOfService.isNotEmpty()) {
-            costOfService.toFloat()
+            costOfService.toDouble()
         } else {
-            0.toFloat()
+            0.0
         }
 
-    fun calculateTip(): Any {
+    fun calculateTip(): Double {
         return if (roundUp) {
-            kotlin.math.ceil(cost / 100 * tipPercentage).toInt()
+            kotlin.math.ceil(cost / 100 * tipPercentage)
         } else {
-            String.format("%.1f", cost / 100 * tipPercentage)
+            cost / 100 * tipPercentage
+            //String.format("%.2f", cost / 100 * tipPercentage)
         }
     }
 }
