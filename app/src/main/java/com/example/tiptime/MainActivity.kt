@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         //init tipResults (ui)
         binding.tipResultTotal.text = getString(R.string.tip_amount_total, "€0.00")
         binding.tipResultPerPerson.text = getString(R.string.tip_amount_per_person, "€0.00")
+        binding.totalAmount.text = getString(R.string.total_amount, "€0.00")
 
         //set OnClickListener on splitSwitch
         binding.splitSwitch.setOnClickListener {
@@ -65,6 +66,11 @@ class MainActivity : AppCompatActivity() {
             val formattedTipPerPerson = String.format("€%.2f", tipPerPerson)
             binding.tipResultPerPerson.text =
                 getString(R.string.tip_amount_per_person, formattedTipPerPerson)
+
+            val totalAmount = tipObj.totalAmount()
+            val formattedTotalAmount = String.format("€%.2f", totalAmount)
+            binding.totalAmount.text =
+                getString(R.string.total_amount, formattedTotalAmount)
         }
 
         //set OnKeyListener on costOfServiceEditText

@@ -53,4 +53,8 @@ class Tip(
             calculateTip()
         }
     }
+
+    fun totalAmount(): Double {
+        return calculateTip() + cost
+    }
 }

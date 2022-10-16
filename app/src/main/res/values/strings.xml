@@ -14,5 +14,6 @@
     <string name="tip_amount_per_person">Tip Amount Per Person: %s</string>
     <string name="tip_amount_total">Tip Amount Total: %s</string>
     <string name="custom">Custom…</string>
+    <string name="total_amount">Total Amount: %s</string>
 
 </resources>

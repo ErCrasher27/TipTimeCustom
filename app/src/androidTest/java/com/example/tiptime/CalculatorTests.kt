@@ -1,8 +1,6 @@
 package com.example.tiptime
 
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -20,13 +18,11 @@ class CalculatorTests {
     val activity = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun calculate_20_percent_tip() {
-        onView(withId(R.id.cost_of_service_edit_text))
-            .perform(typeText("50.00"))
+    fun calculateTip() {
+        compileCostOfServiceEditText(editTextRes = R.string.cost_of_service, cost = "50")
+        clickToCalculate(buttonRes = R.string.calculate)
 
-        onView(withId(R.id.calculate_button)).perform(click())
-
-        onView(withId(R.id.tip_result))
-            .check(matches(withText(containsString("$10.00"))))
+        onView(withId(R.id.tip_result_total))
+            .check(matches(withText(containsString("€10.00"))))
     }
 }
