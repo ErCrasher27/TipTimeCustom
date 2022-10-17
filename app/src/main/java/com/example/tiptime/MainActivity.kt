@@ -6,7 +6,6 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.RadioButton
-import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tiptime.databinding.ActivityMainBinding
 
@@ -27,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding.tipResultTotal.text = getString(R.string.tip_amount_total, "€0.00")
         binding.tipResultPerPerson.text = getString(R.string.tip_amount_per_person, "€0.00")
         binding.totalAmount.text = getString(R.string.total_amount, "€0.00")
+        var symbolCurrency = "€"
 
         //set OnClickListener on splitSwitch
         binding.splitSwitch.setOnClickListener {
@@ -34,8 +34,16 @@ class MainActivity : AppCompatActivity() {
             binding.howMuchPeopleEditText.text = null
         }
 
+        //set OnClickListener on changeCurrencySwitch
+        binding.changeCurrencySwitch.setOnClickListener {
+            symbolCurrency = if (symbolCurrency == "€")
+                "$" else {
+                "€"
+            }
+        }
+
         //set OnCheckedChangeListener on tipOption
-        binding.tipOptions.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
+        binding.tipOptions.setOnCheckedChangeListener { group, checkedId ->
             val radio: RadioButton = group.findViewById(checkedId)
             if (radio == binding.optionCustom) {
                 binding.optionCustomTextInput.isEnabled = true
@@ -44,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 binding.optionCustomTextInput.isEnabled = false
                 binding.optionCustomEditText.text = null
             }
-        })
+        }
 
         //set eventClick on calculateButton
         binding.calculateButton.setOnClickListener {
@@ -55,20 +63,21 @@ class MainActivity : AppCompatActivity() {
                     roundUp = binding.roundUpSwitch.isChecked,
                     split = binding.splitSwitch.isChecked,
                     numberPeople = binding.howMuchPeopleEditText.text.toString(),
-                    customPercentage = binding.optionCustomEditText.text.toString()
+                    customPercentage = binding.optionCustomEditText.text.toString(),
+                    changeCurrency = binding.changeCurrencySwitch.isChecked
                 )
 
             val tip = tipObj.calculateTip()
-            val formattedTip = String.format("€%.2f", tip)
+            val formattedTip = String.format("$symbolCurrency%.2f", tip)
             binding.tipResultTotal.text = getString(R.string.tip_amount_total, formattedTip)
 
             val tipPerPerson = tipObj.calculateTipForPerson()
-            val formattedTipPerPerson = String.format("€%.2f", tipPerPerson)
+            val formattedTipPerPerson = String.format("$symbolCurrency%.2f", tipPerPerson)
             binding.tipResultPerPerson.text =
                 getString(R.string.tip_amount_per_person, formattedTipPerPerson)
 
             val totalAmount = tipObj.totalAmount()
-            val formattedTotalAmount = String.format("€%.2f", totalAmount)
+            val formattedTotalAmount = String.format("$symbolCurrency%.2f", totalAmount)
             binding.totalAmount.text =
                 getString(R.string.total_amount, formattedTotalAmount)
         }
@@ -79,6 +88,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
 
     /**
      *  -----------------
@@ -95,5 +105,6 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 }
+
 
 

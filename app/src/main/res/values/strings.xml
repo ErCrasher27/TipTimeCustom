@@ -15,5 +15,6 @@
     <string name="tip_amount_total">Tip Amount Total: %s</string>
     <string name="custom">Custom…</string>
     <string name="total_amount">Total Amount: %s</string>
+    <string name="change_currency">Change currency ($/€)</string>
 
 </resources>
