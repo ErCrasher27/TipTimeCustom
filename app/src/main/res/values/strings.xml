@@ -17,4 +17,11 @@
     <string name="total_amount">Total Amount: %s</string>
     <string name="change_currency">Change currency ($/€)</string>
 
+    <string name="cost">Cost of Service: %s</string>
+    <string name="percentage">Percentage of tip: %s </string>
+    <string name="tip_amount">Tip Amount: %s</string>
+    <string name="round_up">Added for the round up %s</string>
+    <string name="total">Total Amount: %s</string>
+    <string name="back">Go Back</string>
+
 </resources>

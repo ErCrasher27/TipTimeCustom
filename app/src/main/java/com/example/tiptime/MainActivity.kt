@@ -1,6 +1,7 @@
 package com.example.tiptime
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -56,30 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         //set eventClick on calculateButton
         binding.calculateButton.setOnClickListener {
-            val tipObj =
-                Tip(
-                    costOfService = binding.costOfServiceEditText.text.toString(),
-                    howWasService = binding.tipOptions.checkedRadioButtonId,
-                    roundUp = binding.roundUpSwitch.isChecked,
-                    split = binding.splitSwitch.isChecked,
-                    numberPeople = binding.howMuchPeopleEditText.text.toString(),
-                    customPercentage = binding.optionCustomEditText.text.toString(),
-                    changeCurrency = binding.changeCurrencySwitch.isChecked
-                )
-
-            val tip = tipObj.calculateTip()
-            val formattedTip = String.format("$symbolCurrency%.2f", tip)
-            binding.tipResultTotal.text = getString(R.string.tip_amount_total, formattedTip)
-
-            val tipPerPerson = tipObj.calculateTipForPerson()
-            val formattedTipPerPerson = String.format("$symbolCurrency%.2f", tipPerPerson)
-            binding.tipResultPerPerson.text =
-                getString(R.string.tip_amount_per_person, formattedTipPerPerson)
-
-            val totalAmount = tipObj.totalAmount()
-            val formattedTotalAmount = String.format("$symbolCurrency%.2f", totalAmount)
-            binding.totalAmount.text =
-                getString(R.string.total_amount, formattedTotalAmount)
+            calculate(symbolCurrency)
         }
 
         //set OnKeyListener on costOfServiceEditText
@@ -89,6 +67,40 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+    private fun calculate(symbolCurrency : String){
+        val tipObj =
+            Tip(
+                costOfService = binding.costOfServiceEditText.text.toString(),
+                howWasService = binding.tipOptions.checkedRadioButtonId,
+                roundUp = binding.roundUpSwitch.isChecked,
+                split = binding.splitSwitch.isChecked,
+                numberPeople = binding.howMuchPeopleEditText.text.toString(),
+                customPercentage = binding.optionCustomEditText.text.toString(),
+                changeCurrency = binding.changeCurrencySwitch.isChecked
+            )
+
+        val tip = tipObj.calculateTip()
+        val formattedTip = String.format("$symbolCurrency%.2f", tip)
+        binding.tipResultTotal.text = getString(R.string.tip_amount_total, formattedTip)
+
+        val tipPerPerson = tipObj.calculateTipForPerson()
+        val formattedTipPerPerson = String.format("$symbolCurrency%.2f", tipPerPerson)
+        binding.tipResultPerPerson.text =
+            getString(R.string.tip_amount_per_person, formattedTipPerPerson)
+
+        val totalAmount = tipObj.totalAmount()
+        val formattedTotalAmount = String.format("$symbolCurrency%.2f", totalAmount)
+        binding.totalAmount.text =
+            getString(R.string.total_amount, formattedTotalAmount)
+
+        val intent = Intent(this@MainActivity, SummaryPage::class.java)
+        intent.putExtra("total", formattedTotalAmount)
+        intent.putExtra("tip", formattedTip)
+        intent.putExtra("tipPerson", formattedTipPerPerson)
+        startActivity(intent)
+
+    }
 
     /**
      *  -----------------
