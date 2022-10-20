@@ -22,11 +22,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //init tipResults (ui)
-        binding.tipResultTotal.text = getString(R.string.tip_amount_total, "€0.00")
-        binding.tipResultPerPerson.text = getString(R.string.tip_amount_per_person, "€0.00")
-        binding.totalAmount.text = getString(R.string.total_amount, "€0.00")
+        if (intent.getDoubleExtra("cost", 0.0) != 0.0) {
+            binding.costOfService.editText?.setText(intent.getDoubleExtra("cost", 0.0).toString())
+        }
         var symbolCurrency = "€"
 
         //set OnClickListener on splitSwitch
@@ -80,23 +78,23 @@ class MainActivity : AppCompatActivity() {
                 changeCurrency = binding.changeCurrencySwitch.isChecked
             )
 
+        val stringInTextField = binding.costOfServiceEditText.text.toString()
+        val cost = stringInTextField.toDoubleOrNull()
+        val costFormatted = String.format("$symbolCurrency%.2f", cost)
+
         val tip = tipObj.calculateTip()
         val formattedTip = String.format("$symbolCurrency%.2f", tip)
-        binding.tipResultTotal.text = getString(R.string.tip_amount_total, formattedTip)
 
         val tipPerPerson = tipObj.calculateTipForPerson()
         val formattedTipPerPerson = String.format("$symbolCurrency%.2f", tipPerPerson)
-        binding.tipResultPerPerson.text =
-            getString(R.string.tip_amount_per_person, formattedTipPerPerson)
 
         val totalAmount = tipObj.totalAmount()
         val formattedTotalAmount = String.format("$symbolCurrency%.2f", totalAmount)
-        binding.totalAmount.text =
-            getString(R.string.total_amount, formattedTotalAmount)
 
         val intent = Intent(this@MainActivity, SummaryPage::class.java)
         intent.putExtra("total", formattedTotalAmount)
         intent.putExtra("tip", formattedTip)
+        intent.putExtra("cost", costFormatted)
         intent.putExtra("tipPerson", formattedTipPerPerson)
         startActivity(intent)
 

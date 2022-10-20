@@ -15,6 +15,8 @@ class SummaryPage : AppCompatActivity(){
         binding = SummaryPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        text()
+
         binding.backButton.setOnClickListener {
             val intent = Intent(this@SummaryPage, MainActivity::class.java)
             startActivity(intent)
@@ -25,9 +27,11 @@ class SummaryPage : AppCompatActivity(){
         val total = intent.getStringExtra("total")
         val tip = intent.getStringExtra("tip")
         val tipPerson = intent.getStringExtra("tipPerson")
+        val cost = intent.getStringExtra("cost")
 
-        binding.total.text = total
-        binding.tipResult.text = tip
-        binding.tipPerPersonResult.text = tipPerson
+        binding.cost.text = getString(R.string.cost, cost)
+        binding.total.text = getString(R.string.total_amount, total)
+        binding.tipResult.text = getString(R.string.tip_amount_total, tip)
+        binding.tipPerPersonResult.text = getString(R.string.tip_amount_per_person, tipPerson)
     }
 }
