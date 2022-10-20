@@ -36,8 +36,9 @@ class MainActivity : AppCompatActivity() {
 
         //set OnClickListener on changeCurrencySwitch
         binding.changeCurrencySwitch.setOnClickListener {
-            symbolCurrency = if (symbolCurrency == "€")
-                "$" else {
+            symbolCurrency = if (symbolCurrency == "€") {
+                "$"
+            } else {
                 "€"
             }
         }
@@ -88,7 +89,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
     /**
      *  -----------------
