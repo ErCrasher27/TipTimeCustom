@@ -1,6 +1,7 @@
 package com.example.tiptime
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -86,6 +87,15 @@ class MainActivity : AppCompatActivity() {
         //set OnKeyListener on costOfServiceEditText
         binding.costOfServiceEditText.setOnKeyListener { view, keyCode, _ ->
             handleKeyEvent(view, keyCode)
+        }
+
+        binding.showButton.setOnClickListener {
+            val intent = Intent(this, PopUpWindow::class.java)
+            intent.putExtra("popuptitle", "Error")
+            intent.putExtra("popuptext", "Sorry, that email address is already used!")
+            intent.putExtra("popupbtn", "OK")
+            intent.putExtra("darkstatusbar", false)
+            startActivity(intent)
         }
 
     }
