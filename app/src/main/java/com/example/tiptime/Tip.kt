@@ -3,9 +3,9 @@ package com.example.tiptime
 /**
  * -----------------
  * Tip
- * ChangeCurrency if true = "€", if false = "$"
  * -----------------
  */
+
 class Tip(
     val costOfService: String,
     val howWasService: Int,
@@ -13,12 +13,26 @@ class Tip(
     val split: Boolean,
     val numberPeople: String,
     private val customPercentage: String,
-    val changeCurrency: Boolean,
+    val changeCurrency: String,
 ) {
 
     private val defaultValueForNull: Int = 0
 
-    private val euroValue = 1.03
+    val currency: Double
+        get() = when (changeCurrency) {
+            CurrencyNames.Eur.name -> CurrencyExchange.Eur.currency
+            CurrencyNames.Dollars.name -> CurrencyExchange.Dollars.currency
+            CurrencyNames.Pounds.name -> CurrencyExchange.Pounds.currency
+            else -> CurrencyExchange.Eur.currency
+        }
+
+    val symbolCurrency
+        get() = when (changeCurrency) {
+            CurrencyNames.Eur.name -> CurrencyExchange.Eur.symbol
+            CurrencyNames.Dollars.name -> CurrencyExchange.Dollars.symbol
+            CurrencyNames.Pounds.name -> CurrencyExchange.Pounds.symbol
+            else -> CurrencyExchange.Eur.symbol
+        }
 
     private val tipPercentage: Int
         get() = when (this.howWasService) {
@@ -37,11 +51,7 @@ class Tip(
 
     private val cost: Double
         get() = if (this.costOfService.isNotEmpty()) {
-            if (changeCurrency) {
-                this.costOfService.toDouble()
-            } else {
-                this.costOfService.toDouble() * euroValue
-            }
+            this.costOfService.toDouble() * currency
         } else {
             0.0
         }

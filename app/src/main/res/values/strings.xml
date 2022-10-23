@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Tip Time</string>
 
-    <string name="cost_of_service">Cost of Service</string>
+    <string name="cost_of_service">Cost of Service (€)</string>
     <string name="how_was_the_service">How was the service?</string>
     <string name="amazing_service">Amazing (20%)</string>
     <string name="good_service">Good (18%)</string>
@@ -15,6 +15,12 @@
     <string name="tip_amount_total">Tip Amount Total: %s</string>
     <string name="custom">Custom…</string>
     <string name="total_amount">Total Amount: %s</string>
-    <string name="change_currency">Change currency ($/€)</string>
+    <string name="currency_question">Currency Exchange</string>
+
+    <string-array name="change_currency_list">
+        <item>Eur</item>
+        <item>Dollars</item>
+        <item>Pounds</item>
+    </string-array>
 
 </resources>

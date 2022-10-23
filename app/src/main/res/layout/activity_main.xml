@@ -24,7 +24,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/cost_of_service"
-            android:layout_width="160dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:hint="@string/cost_of_service"
@@ -177,21 +177,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:importantForAccessibility="no"
-            app:layout_constraintBottom_toBottomOf="@id/change_currency_switch"
+            app:layout_constraintBottom_toBottomOf="@id/currency_question"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/change_currency_switch"
+            app:layout_constraintTop_toTopOf="@id/currency_question"
             app:srcCompat="@drawable/ic_money" />
 
-        <com.google.android.material.switchmaterial.SwitchMaterial
-            android:id="@+id/change_currency_switch"
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/currency_question"
+            style="@style/Widget.TipTime.TextView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:checked="true"
-            android:minHeight="48dp"
-            android:text="@string/change_currency"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/currency_question"
+            app:layout_constraintBottom_toBottomOf="@id/change_currency_spinner"
+            app:layout_constraintStart_toEndOf="@+id/icon_change_currency"
+            app:layout_constraintStart_toStartOf="@id/icon_change_currency"
+            app:layout_constraintTop_toBottomOf="@id/round_up_switch" />
+
+        <Spinner
+            android:id="@+id/change_currency_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/icon_change_currency"
             app:layout_constraintTop_toBottomOf="@id/round_up_switch" />
 
         <Button
@@ -205,7 +216,7 @@
             android:text="@string/calculate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/change_currency_switch" />
+            app:layout_constraintTop_toBottomOf="@id/change_currency_spinner" />
 
         <TextView
             android:id="@+id/tip_result_per_person"
@@ -236,6 +247,7 @@
             android:text="@string/total_amount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tip_result_total" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -2,9 +2,11 @@ package com.example.tiptime
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tiptime.databinding.ActivityMainBinding
@@ -26,20 +28,24 @@ class MainActivity : AppCompatActivity() {
         binding.tipResultTotal.text = getString(R.string.tip_amount_total, "€0.00")
         binding.tipResultPerPerson.text = getString(R.string.tip_amount_per_person, "€0.00")
         binding.totalAmount.text = getString(R.string.total_amount, "€0.00")
-        var symbolCurrency = "€"
+
+        //fill spinner
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.change_currency_list,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            binding.changeCurrencySpinner.adapter = adapter
+        }
 
         //set OnClickListener on splitSwitch
         binding.splitSwitch.setOnClickListener {
             binding.howManyPeople.isEnabled = !binding.howManyPeople.isEnabled
             binding.howMuchPeopleEditText.text = null
-        }
-
-        //set OnClickListener on changeCurrencySwitch
-        binding.changeCurrencySwitch.setOnClickListener {
-            symbolCurrency = if (symbolCurrency == "€")
-                "$" else {
-                "€"
-            }
         }
 
         //set OnCheckedChangeListener on tipOption
@@ -64,20 +70,25 @@ class MainActivity : AppCompatActivity() {
                     split = binding.splitSwitch.isChecked,
                     numberPeople = binding.howMuchPeopleEditText.text.toString(),
                     customPercentage = binding.optionCustomEditText.text.toString(),
-                    changeCurrency = binding.changeCurrencySwitch.isChecked
+                    changeCurrency = binding.changeCurrencySpinner.selectedItem.toString()
                 )
 
+            Log.d("MainActivity", binding.changeCurrencySpinner.selectedItem.toString())
+            Log.d("MainActivity", tipObj.currency.toString())
+            Log.d("MainActivity", tipObj.symbolCurrency)
+
+
             val tip = tipObj.calculateTip()
-            val formattedTip = String.format("$symbolCurrency%.2f", tip)
+            val formattedTip = String.format("${tipObj.symbolCurrency}%.2f", tip)
             binding.tipResultTotal.text = getString(R.string.tip_amount_total, formattedTip)
 
             val tipPerPerson = tipObj.calculateTipForPerson()
-            val formattedTipPerPerson = String.format("$symbolCurrency%.2f", tipPerPerson)
+            val formattedTipPerPerson = String.format("${tipObj.symbolCurrency}%.2f", tipPerPerson)
             binding.tipResultPerPerson.text =
                 getString(R.string.tip_amount_per_person, formattedTipPerPerson)
 
             val totalAmount = tipObj.totalAmount()
-            val formattedTotalAmount = String.format("$symbolCurrency%.2f", totalAmount)
+            val formattedTotalAmount = String.format("${tipObj.symbolCurrency}%.2f", totalAmount)
             binding.totalAmount.text =
                 getString(R.string.total_amount, formattedTotalAmount)
         }
@@ -86,9 +97,7 @@ class MainActivity : AppCompatActivity() {
         binding.costOfServiceEditText.setOnKeyListener { view, keyCode, _ ->
             handleKeyEvent(view, keyCode)
         }
-
     }
-
 
     /**
      *  -----------------
@@ -105,6 +114,4 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 }
-
-
 
